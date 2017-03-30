@@ -10,13 +10,10 @@ int led4= 25;
 int led5= 26;
 int led6= 27;
 
-
-int botao = 9;
-
+int botao = 53;
 
 void setup()                 
 {
-
   pinMode(led1, OUTPUT);
   pinMode(led2, OUTPUT);
   pinMode(led3, OUTPUT);
@@ -81,36 +78,8 @@ void rollTheDice()
     digitalWrite(led6, LOW);
   }
 
-
-
-
-
-
-
-
+  delay(200);
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
