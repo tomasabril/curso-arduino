@@ -1,0 +1,67 @@
+
+#include <Wire.h> //Include a biblioteca Wire.h
+#include <HMC5883L.h> //Include a biblioteca HMC5883L.h
+
+HMC5883L bussola; //Instância a biblioteca para a bússola
+
+int i; //Variável para contagem
+float graus; //Variável para armazenar o valor aferido
+float precisao; //Variável parar o melhorar a precisao do valor aferido
+
+void setup()
+{  
+  Serial.begin(9600);
+  Wire.begin(); //Inicia a comunicação o I2C
+
+  //Configura a bússola
+  bussola = HMC5883L();
+  bussola.SetScale(1.3);
+  bussola.SetMeasurementMode(Measurement_Continuous);
+  //===================
+
+}
+
+void loop()
+{
+  precisao = 0; //Zera a variável para uma nova leitura
+
+  for(i=0;i<100;i++) //Faz a leitura 100 e armazenar a somatória
+  {
+
+    //Pega os dados necessários para o cálculo da bússola digital
+    MagnetometerScaled scaled = bussola.ReadScaledAxis();
+    int MilliGauss_OnThe_XAxis = scaled.XAxis;
+    float heading = atan2(scaled.YAxis, scaled.XAxis);
+    float declinationAngle = 0.3339; //Compensação dos polos (São Paulo)
+    heading += declinationAngle;
+    //===========================================================
+
+    //Converte o valor aferido para angulo
+    if(heading < 0)
+    {
+      heading += 2*PI;
+    } 
+
+    if(heading > 2*PI)
+    {
+      heading -= 2*PI;
+    }  
+
+    graus = heading * 180/M_PI;
+    //===================================
+
+    precisao = precisao + graus;
+    delay(1);
+
+  }
+
+
+
+  graus = precisao/100; //Pega a somatória e tira a média dos valores aferidos
+  Serial.print("graus: ");
+  Serial.print(graus);
+  Serial.print("\n");
+
+}
+
+

@@ -1,0 +1,6 @@
+hmc5883l
+
+http://labdegaragem.com/profiles/blogs/tutorial-bussola-eletronica-com-hmc5883l
+
+http://www.instructables.com/id/Tutorial-to-Interface-HMC-5833L-With-Arduino-Uno/?ALLSTEPS
+
